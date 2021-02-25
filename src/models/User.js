@@ -12,4 +12,13 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+userSchema.pre("save", function (next) {
+  const user = this;
+  if (!user.isModified("password")) {
+    return next();
+  }
+
+  bcrypt.genSalt(10, (err, salt) => {});
+});
+
 mongoose.model("User", userSchema);
